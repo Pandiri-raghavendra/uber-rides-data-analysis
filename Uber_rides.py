@@ -37,9 +37,9 @@ def load_data(file_path):
 
 # Main app
 def main():
-    st.title("🚕 Uber Rides Analysis Dashboard (Apr–Aug 2014)")
+    st.title("Uber Rides Analysis Dashboard (Apr–Aug 2014)")
 
-    st.sidebar.header("📁 Select a Month's Dataset")
+    st.sidebar.header("Select a Month's Dataset")
     dataset_paths = {
         "April 2014": r"D:\today\uber-raw-data-apr14.csv",
         "May 2014":   r"D:\today\uber-raw-data-may14.csv",
@@ -54,11 +54,11 @@ def main():
     # Load data
     df = load_data(file_path)
 
-    st.subheader(f"📄 Sample Data – {selected_month}")
+    st.subheader(f"Sample Data – {selected_month}")
     st.write(df.head())
 
     # Ride Frequency by Hour
-    st.subheader("⏰ Ride Frequency by Hour")
+    st.subheader("Ride Frequency by Hour")
     fig1, ax1 = plt.subplots()
     df['hour'].value_counts().sort_index().plot(kind='bar', color='skyblue', ax=ax1)
     ax1.set_xlabel("Hour of Day")
@@ -66,7 +66,7 @@ def main():
     st.pyplot(fig1)
 
     # Ride Frequency by Day of Week
-    st.subheader("📅 Ride Frequency by Day of Week")
+    st.subheader("Ride Frequency by Day of Week")
     fig2, ax2 = plt.subplots()
     df['day_of_week'].value_counts().sort_index().plot(kind='bar', color='lightgreen', ax=ax2)
     ax2.set_xlabel("Day of Week (0 = Mon)")
@@ -75,7 +75,7 @@ def main():
 
     # KMeans Clustering of Start Locations
     if 'start_lat' in df.columns and 'start_lon' in df.columns:
-        st.subheader("📍 KMeans Clustering of Start Locations")
+        st.subheader("KMeans Clustering of Start Locations")
         coords = df[['start_lat', 'start_lon']].dropna()
         if len(coords) >= 5:
             kmeans = KMeans(n_clusters=5, random_state=0)
@@ -89,7 +89,7 @@ def main():
             st.warning("Not enough data for clustering.")
 
     # Forecasting Ride Demand
-    st.subheader("📈 Forecasting Ride Demand (Prophet)")
+    st.subheader("Forecasting Ride Demand (Prophet)")
     daily_counts = df.groupby(df['pickup_datetime'].dt.date).size().reset_index(name='rides')
     daily_counts.columns = ['ds', 'y']
 
@@ -107,3 +107,4 @@ def main():
 # Run the app
 if __name__ == "__main__":
     main()
+
